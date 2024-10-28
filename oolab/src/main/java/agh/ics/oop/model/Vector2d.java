@@ -1,5 +1,7 @@
 package agh.ics.oop.model;
 
+import java.util.Objects;
+
 public class Vector2d {
     private final int x;
     private final int y;
@@ -18,7 +20,7 @@ public class Vector2d {
     }
 
     public String toString() {
-        return "(" + x + "," + y + ")";
+        return String.format("(%d,%d)", x, y);
     }
 
     public boolean precedes(Vector2d other) {
@@ -59,5 +61,8 @@ public class Vector2d {
         return x == otherVector.getX() && y == otherVector.getY();
     }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
 }

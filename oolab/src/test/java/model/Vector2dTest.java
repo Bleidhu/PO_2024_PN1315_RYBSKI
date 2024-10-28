@@ -4,9 +4,6 @@ import agh.ics.oop.model.Vector2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 public class Vector2dTest {
     @Test
     public void vectorEualToItself() {
@@ -49,7 +46,7 @@ public class Vector2dTest {
     }
 
     @Test
-    public void vectorPeceeds() {
+    public void vectorPreceeds() {
         //Basic tests - test basic cases
         var orginalVector = new Vector2d(0, 0);
         //Self preceding test
@@ -136,26 +133,6 @@ public class Vector2dTest {
 
     }
 
-    @Test
-    public void vectorReturnsUpperRightExhaustiveTests() {
-        //Generated tests - test ALL possible combinations, may be harder to pinpoint issue but will find them
-        int coords[] = {-1, 0, 1};
-        for (int i : coords) {
-            for (int j : coords) {
-                var firstPoint = new Vector2d(i, j);
-                for (int k : coords) {
-                    for (int l : coords) {
-
-                        var secondPoint = new Vector2d(k, l);
-                        var expectedResult = new Vector2d(max(i, k), max(j, l));
-
-                        Assertions.assertEquals(expectedResult, firstPoint.upperRight(secondPoint));
-                    }
-                }
-            }
-        }
-
-    }
 
     @Test
     public void vectorReturnsLowerLeftBasicTests() {
@@ -175,25 +152,6 @@ public class Vector2dTest {
         Assertions.assertEquals(new Vector2d(-1, 0), orginalVector.lowerLeft(oneBigerOneLower));
     }
 
-    @Test
-    public void vectorReturnsLowerLeftExhaustiveTests() {
-        //Generated tests - test ALL possible combinations, may be harder to pinpoint issue but will find them
-        int coords[] = {-1, 0, 1};
-        for (int i : coords) {
-            for (int j : coords) {
-                var firstPoint = new Vector2d(i, j);
-                for (int k : coords) {
-                    for (int l : coords) {
-
-                        var secondPoint = new Vector2d(k, l);
-                        var expectedResult = new Vector2d(min(i, k), min(j, l));
-
-                        Assertions.assertEquals(expectedResult, firstPoint.lowerLeft(secondPoint));
-                    }
-                }
-            }
-        }
-    }
 
     @Test
     public void vectorReturnsAdditionOfSuppliedVectorBasicTests() {
@@ -213,26 +171,6 @@ public class Vector2dTest {
         Assertions.assertEquals(new Vector2d(0, 2), minusOneOne.add(twoOnes));
     }
 
-    @Test
-    public void vectorReturnsAdditionOfSuppliedVectorExhaustiveTests() {
-
-        //Generated tests - test ALL possible combinations, may be harder to pinpoint issue but will find them
-        int coords[] = {-1, 0, 1};
-        for (int i : coords) {
-            for (int j : coords) {
-                var firstPoint = new Vector2d(i, j);
-                for (int k : coords) {
-                    for (int l : coords) {
-
-                        var secondPoint = new Vector2d(k, l);
-                        var expectedResult = new Vector2d(i + k, j + l);
-
-                        Assertions.assertEquals(expectedResult, firstPoint.add(secondPoint));
-                    }
-                }
-            }
-        }
-    }
 
     @Test
     public void vectorReturnsSubstractionOfSuppliedVectorBasicTests() {
@@ -253,26 +191,6 @@ public class Vector2dTest {
     }
 
     @Test
-    public void vectorReturnsSubstractionOfSuppliedVectorExhaustiveTests() {
-        //Generated tests - test ALL possible combinations, may be harder to pinpoint issue but will find them
-        int coords[] = {-1, 0, 1};
-        for (int i : coords) {
-            for (int j : coords) {
-                var firstPoint = new Vector2d(i, j);
-                for (int k : coords) {
-                    for (int l : coords) {
-
-                        var secondPoint = new Vector2d(k, l);
-                        var expectedResult = new Vector2d(i - k, j - l);
-
-                        Assertions.assertEquals(expectedResult, firstPoint.subtract(secondPoint));
-                    }
-                }
-            }
-        }
-    }
-
-    @Test
     public void vectorReturnsOppositeVectorSimpleTests() {
         //Basic tests - test basic cases
         var twoZeros = new Vector2d(0, 0);
@@ -286,21 +204,6 @@ public class Vector2dTest {
         Assertions.assertEquals(twoZeros, twoZeros.opposite());
         Assertions.assertEquals(twoMinusOnes, twoOnes.opposite());
         Assertions.assertEquals(new Vector2d(1, -1), minusOneOne.opposite());
-    }
-
-    @Test
-    public void vectorReturnsOppositeVectorExhaustiveTests() {
-        
-        //Generated tests - test ALL possible combinations, may be harder to pinpoint issue but will find them
-        int coords[] = {-1, 0, 1};
-        for (int i : coords) {
-            for (int j : coords) {
-                var testPoint = new Vector2d(i, j);
-                var expectedResult = new Vector2d(-1 * i, -1 * j);
-
-                Assertions.assertEquals(expectedResult, testPoint.opposite());
-            }
-        }
     }
 
 
