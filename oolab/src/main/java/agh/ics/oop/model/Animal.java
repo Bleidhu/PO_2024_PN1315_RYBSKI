@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Animal {
     static final Vector2d lowerMapBoundary = new Vector2d(0, 0);
     static final Vector2d upperMapBoundary = new Vector2d(4, 4);
-    private MapDirection facingDirection = MapDirection.NORTH;
+    private MapDirection facingDirection;
     private Vector2d localizationOnMap;
 
     public Animal() {
@@ -31,21 +31,23 @@ public class Animal {
             case LEFT -> facingDirection = facingDirection.previous();
             case RIGHT -> facingDirection = facingDirection.next();
             case FORWARD -> {
-                if (this.localizationOnMap.add(this.facingDirection.toUnitVector()).follows(lowerMapBoundary)
-                        && this.localizationOnMap.add(this.facingDirection.toUnitVector()).precedes(upperMapBoundary))
-                    localizationOnMap = localizationOnMap.add(facingDirection.toUnitVector());
+                var new_loc = this.getLocalizationOnMap().add(this.facingDirection.toUnitVector());
+                if (new_loc.follows(lowerMapBoundary)
+                        && new_loc.precedes(upperMapBoundary))
+                    localizationOnMap = new_loc;
             }
             case BACKWARD -> {
-                if (this.localizationOnMap.subtract(this.facingDirection.toUnitVector()).follows(lowerMapBoundary)
-                        && this.localizationOnMap.subtract(this.facingDirection.toUnitVector()).precedes(upperMapBoundary))
-                    localizationOnMap = localizationOnMap.subtract(facingDirection.toUnitVector());
+                var new_loc = this.getLocalizationOnMap().subtract(this.facingDirection.toUnitVector());
+                if (new_loc.follows(lowerMapBoundary)
+                        && new_loc.precedes(upperMapBoundary))
+                    localizationOnMap = new_loc;
             }
         }
     }
 
     @Override
     public String toString() {
-        return String.format("(position: %s , orientation %s)", localizationOnMap.toString(), facingDirection.toString());
+        return String.format("(position: %s , orientation %s)", localizationOnMap, facingDirection);
     }
 
     public boolean isAt(Vector2d position) {
