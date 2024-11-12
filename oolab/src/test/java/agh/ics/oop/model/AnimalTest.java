@@ -1,13 +1,11 @@
-package model;
+package agh.ics.oop.model;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MapDirection;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class AnimalTest {
+    MoveValidator validator = new RectangularMap(4, 4);
+
     @Test
     void animalIsProperlyOrientedWhenCreated() {
         var testAnimal = new Animal();
@@ -18,14 +16,14 @@ public class AnimalTest {
     @Test
     void animalRotatesLeft() {
         var testAnimal = new Animal();
-        testAnimal.move(MoveDirection.LEFT);
+        testAnimal.move(MoveDirection.LEFT, validator);
         Assertions.assertEquals(MapDirection.WEST, testAnimal.getFacingDirection());
     }
 
     @Test
     void animalRotatesRight() {
         var testAnimal = new Animal();
-        testAnimal.move(MoveDirection.RIGHT);
+        testAnimal.move(MoveDirection.RIGHT, validator);
         Assertions.assertEquals(MapDirection.EAST, testAnimal.getFacingDirection());
     }
 
@@ -33,7 +31,7 @@ public class AnimalTest {
     void animalMovesForward() {
         var testAnimal = new Animal();
         var finalPosition = new Vector2d(2, 3);
-        testAnimal.move(MoveDirection.FORWARD);
+        testAnimal.move(MoveDirection.FORWARD, validator);
         Assertions.assertEquals(finalPosition, testAnimal.getLocalizationOnMap());
     }
 
@@ -41,7 +39,7 @@ public class AnimalTest {
     void animalMovesBackward() {
         var testAnimal = new Animal();
         var finalPosition = new Vector2d(2, 1);
-        testAnimal.move(MoveDirection.BACKWARD);
+        testAnimal.move(MoveDirection.BACKWARD, validator);
         Assertions.assertEquals(finalPosition, testAnimal.getLocalizationOnMap());
     }
 
@@ -49,8 +47,8 @@ public class AnimalTest {
     void animalMovesAfterRotation() {
         var testAnimal = new Animal();
         var finalPosition = new Vector2d(1, 2);
-        testAnimal.move(MoveDirection.LEFT);
-        testAnimal.move(MoveDirection.FORWARD);
+        testAnimal.move(MoveDirection.LEFT, validator);
+        testAnimal.move(MoveDirection.FORWARD, validator);
         Assertions.assertEquals(finalPosition, testAnimal.getLocalizationOnMap());
     }
 
@@ -62,40 +60,40 @@ public class AnimalTest {
         var testAnimal = new Animal(startingPosition);
         var finalPosition = new Vector2d(4, 4);
 
-        testAnimal.move(MoveDirection.FORWARD);
+        testAnimal.move(MoveDirection.FORWARD, validator);
         Assertions.assertEquals(finalPosition, testAnimal.getLocalizationOnMap());
 
-        testAnimal.move(MoveDirection.RIGHT);
-        testAnimal.move(MoveDirection.FORWARD);
+        testAnimal.move(MoveDirection.RIGHT, validator);
+        testAnimal.move(MoveDirection.FORWARD, validator);
         Assertions.assertEquals(finalPosition, testAnimal.getLocalizationOnMap());
 
-        testAnimal.move(MoveDirection.RIGHT);
-        testAnimal.move(MoveDirection.BACKWARD);
+        testAnimal.move(MoveDirection.RIGHT, validator);
+        testAnimal.move(MoveDirection.BACKWARD, validator);
         Assertions.assertEquals(finalPosition, testAnimal.getLocalizationOnMap());
 
-        testAnimal.move(MoveDirection.RIGHT);
-        testAnimal.move(MoveDirection.BACKWARD);
+        testAnimal.move(MoveDirection.RIGHT, validator);
+        testAnimal.move(MoveDirection.BACKWARD, validator);
         Assertions.assertEquals(finalPosition, testAnimal.getLocalizationOnMap());
 
         startingPosition = new Vector2d(0, 0);
         testAnimal = new Animal(startingPosition);
         finalPosition = new Vector2d(0, 0);
 
-        testAnimal.move(MoveDirection.BACKWARD);
+        testAnimal.move(MoveDirection.BACKWARD, validator);
         Assertions.assertEquals(finalPosition, testAnimal.getLocalizationOnMap());
 
-        testAnimal.move(MoveDirection.RIGHT);
-        testAnimal.move(MoveDirection.BACKWARD);
+        testAnimal.move(MoveDirection.RIGHT, validator);
+        testAnimal.move(MoveDirection.BACKWARD, validator);
         Assertions.assertEquals(finalPosition, testAnimal.getLocalizationOnMap());
 
-        testAnimal.move(MoveDirection.RIGHT);
-        testAnimal.move(MoveDirection.FORWARD);
+        testAnimal.move(MoveDirection.RIGHT, validator);
+        testAnimal.move(MoveDirection.FORWARD, validator);
         Assertions.assertEquals(finalPosition, testAnimal.getLocalizationOnMap());
 
-        testAnimal.move(MoveDirection.RIGHT);
-        testAnimal.move(MoveDirection.FORWARD);
+        testAnimal.move(MoveDirection.RIGHT, validator);
+        testAnimal.move(MoveDirection.FORWARD, validator);
         Assertions.assertEquals(finalPosition, testAnimal.getLocalizationOnMap());
     }
-    
+
 
 }

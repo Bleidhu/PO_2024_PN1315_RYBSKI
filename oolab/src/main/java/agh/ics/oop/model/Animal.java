@@ -3,14 +3,11 @@ package agh.ics.oop.model;
 import java.util.Objects;
 
 public class Animal {
-    static final Vector2d lowerMapBoundary = new Vector2d(0, 0);
-    static final Vector2d upperMapBoundary = new Vector2d(4, 4);
     private MapDirection facingDirection;
     private Vector2d localizationOnMap;
 
     public Animal() {
-        facingDirection = MapDirection.NORTH;
-        localizationOnMap = new Vector2d(2, 2);
+        this(new Vector2d(2, 2));
     }
 
     public Animal(Vector2d localizationOnMap) {
@@ -26,20 +23,18 @@ public class Animal {
         return facingDirection;
     }
 
-    public void move(MoveDirection direction) {
+    public void move(MoveDirection direction, MoveValidator validator) {
         switch (direction) {
             case LEFT -> facingDirection = facingDirection.previous();
             case RIGHT -> facingDirection = facingDirection.next();
             case FORWARD -> {
-                var new_loc = this.getLocalizationOnMap().add(this.facingDirection.toUnitVector());
-                if (new_loc.follows(lowerMapBoundary)
-                        && new_loc.precedes(upperMapBoundary))
+                var new_loc = localizationOnMap.add(this.facingDirection.toUnitVector());
+                if (validator.canMoveTo(new_loc))
                     localizationOnMap = new_loc;
             }
             case BACKWARD -> {
-                var new_loc = this.getLocalizationOnMap().subtract(this.facingDirection.toUnitVector());
-                if (new_loc.follows(lowerMapBoundary)
-                        && new_loc.precedes(upperMapBoundary))
+                var new_loc = localizationOnMap.subtract(this.facingDirection.toUnitVector());
+                if (validator.canMoveTo(new_loc))
                     localizationOnMap = new_loc;
             }
         }
@@ -47,10 +42,28 @@ public class Animal {
 
     @Override
     public String toString() {
-        return String.format("(position: %s , orientation %s)", localizationOnMap, facingDirection);
+        return String.format(switch (facingDirection) {
+            case NORTH -> "^";
+            case EAST -> ">";
+            case WEST -> "<";
+            case SOUTH -> "v";
+        });
     }
 
     public boolean isAt(Vector2d position) {
         return Objects.equals(localizationOnMap, position);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return localizationOnMap == animal.localizationOnMap && Objects.equals(localizationOnMap, animal.localizationOnMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(facingDirection, localizationOnMap);
     }
 }
