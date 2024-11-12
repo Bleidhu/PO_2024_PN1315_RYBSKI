@@ -1,36 +1,28 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.*;
+import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.WorldMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Simulation {
-    private final List<Animal> animals = new ArrayList<>();
+public class Simulation<T, P> {
+    private final List<T> animals = new ArrayList<>();
     private final List<MoveDirection> moves;
-    private final WorldMap map;
+    private final WorldMap<T, P> map;
 
-    public Simulation(List<Vector2d> startingPositions, List<MoveDirection> moves, WorldMap map) {
-        for (var position : startingPositions) {
-            var animalToBeAdded = new Animal(position);
-            if (map.place(animalToBeAdded))
-                animals.add(animalToBeAdded);
-        }
-        this.moves = moves;
+    public Simulation(List<T> animals, List<MoveDirection> moves, WorldMap<T, P> map) {
         this.map = map;
+        this.moves = moves;
+
+        for (var animalToBeAdded : animals) {
+            if (map.place(animalToBeAdded))
+                this.animals.add(animalToBeAdded);
+        }
+
+
     }
 
-    int getAnimalsAmount() {
-        return animals.size();
-    }
-
-    Vector2d getAnimalLocalisation(int i) {
-        return animals.get(i).getLocalizationOnMap();
-    }
-
-    MapDirection getAnimalFacingDirection(int i) {
-        return animals.get(i).getFacingDirection();
-    }
 
     public void run() {
         int currentAnimalIndex = 0;

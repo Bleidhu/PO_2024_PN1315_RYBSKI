@@ -6,39 +6,39 @@ package agh.ics.oop.model;
  *
  * @author apohllo, idzik
  */
-public interface WorldMap extends agh.ics.oop.model.MoveValidator {
+public interface WorldMap<T, P> extends MoveValidator<P> {
 
     /**
-     * Place a animal on the map.
+     * Place a object on the map.
      *
-     * @param animal The animal to place on the map.
-     * @return True if the animal was placed. The animal cannot be placed if the move is not valid.
+     * @param inhabitant The inhabitant to place on the map.
+     * @return True if the inhabitant was placed. The inhabitant cannot be placed if the move is not valid.
      */
-    boolean place(Animal animal);
+    boolean place(T inhabitant);
 
     /**
-     * Moves an animal (if it is present on the map) according to specified direction.
+     * Moves an inhabitant (if it is present on the map) according to specified direction.
      * If the move is not possible, this method has no effect.
      */
-    void move(Animal animal, MoveDirection direction);
+    void move(T object, MoveDirection direction);
 
     /**
      * Return true if given position on the map is occupied. Should not be
-     * confused with canMove since there might be empty positions where the animal
+     * confused with canMove since there might be empty positions where the inhabitant
      * cannot move.
      *
      * @param position Position to check.
      * @return True if the position is occupied.
      */
-    boolean isOccupied(Vector2d position);
+    boolean isOccupied(P position);
 
     /**
-     * Return an animal at a given position.
+     * Return an inhabitant at a given position.
      *
-     * @param position The position of the animal.
-     * @return animal or null if the position is not occupied.
+     * @param position The position of the inhabitant.
+     * @return inhabitant or null if the position is not occupied.
      */
-    Animal objectAt(Vector2d position);
+    T objectAt(P position);
 
-    boolean canMoveTo(Vector2d position);
+    boolean canMoveTo(P position);
 }

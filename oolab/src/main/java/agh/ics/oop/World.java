@@ -1,16 +1,18 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.*;
+import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.TextMap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class World {
     public static void main(String[] args) {
-        var animal = new Animal();
         List<MoveDirection> directions = OptionsParser.parseOptions(args);
-        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
-        WorldMap map = new RectangularMap(4, 5);
-        Simulation simulation = new Simulation(positions, directions, map);
+        List<String> inhabitants = new ArrayList<>(List.of("Ala", "ma", "sowoniedźwiedzia"));
+        TextMap map = new TextMap();
+
+        Simulation<String, Integer> simulation = new Simulation<String, Integer>(inhabitants, directions, map);
         simulation.run();
     }
 
