@@ -36,5 +36,13 @@ public class Simulation<T, P> {
         }
 
     }
+
+    T getAnimal(int i) {
+        return animals.get(i);
+    }
+
+    T getAnimalAt(P i) {
+        return map.objectAt(i);
+    }
 }
 

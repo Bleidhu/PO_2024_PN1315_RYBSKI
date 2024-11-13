@@ -21,6 +21,7 @@ public class TextMap implements WorldNumberPositionMap<String, Integer> {
     public void move(String object, MoveDirection direction) {
         int currentPosition = 0;
         while (currentPosition < rightBoundary && !object.equals(map.get(currentPosition))) {
+            currentPosition++;
         }
         Integer desiredPosition = currentPosition + switch (direction) {
             case MoveDirection.LEFT, MoveDirection.BACKWARD -> -1;
@@ -49,8 +50,6 @@ public class TextMap implements WorldNumberPositionMap<String, Integer> {
 
     @Override
     public String toString() {
-        return "TextMap{" +
-                "map=" + map +
-                '}';
+        return map.toString();
     }
 }
