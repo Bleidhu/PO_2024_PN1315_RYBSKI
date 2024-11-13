@@ -6,17 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RectangularMap implements agh.ics.oop.model.WorldMap {
-    private final int width;
-    private final int height;
-    private final Vector2d topBoundary;
+    private final Vector2d upperBoundary;
     private final Vector2d lowerBoundary;
     private final MapVisualizer visualiser;
     Map<Vector2d, Animal> animals = new HashMap<>();
 
     public RectangularMap(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.topBoundary = new Vector2d(width - 1, height - 1);
+        this.upperBoundary = new Vector2d(width - 1, height - 1);
         this.lowerBoundary = new Vector2d(0, 0);
         this.visualiser = new MapVisualizer(this);
     }
@@ -55,14 +51,11 @@ public class RectangularMap implements agh.ics.oop.model.WorldMap {
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        if (position.follows(lowerBoundary) && position.precedes((topBoundary)))
-            return !isOccupied(position);
-        else
-            return false;
+        return (position.follows(lowerBoundary) && position.precedes(upperBoundary)) && !isOccupied(position);
     }
 
     @Override
     public String toString() {
-        return visualiser.draw(lowerBoundary, topBoundary);
+        return visualiser.draw(lowerBoundary, upperBoundary);
     }
 }

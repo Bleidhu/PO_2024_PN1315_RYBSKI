@@ -28,14 +28,14 @@ public class Animal {
             case LEFT -> facingDirection = facingDirection.previous();
             case RIGHT -> facingDirection = facingDirection.next();
             case FORWARD -> {
-                var new_loc = localizationOnMap.add(this.facingDirection.toUnitVector());
-                if (validator.canMoveTo(new_loc))
-                    localizationOnMap = new_loc;
+                var newLoc = localizationOnMap.add(this.facingDirection.toUnitVector());
+                if (validator.canMoveTo(newLoc))
+                    localizationOnMap = newLoc;
             }
             case BACKWARD -> {
-                var new_loc = localizationOnMap.subtract(this.facingDirection.toUnitVector());
-                if (validator.canMoveTo(new_loc))
-                    localizationOnMap = new_loc;
+                var newLoc = localizationOnMap.subtract(this.facingDirection.toUnitVector());
+                if (validator.canMoveTo(newLoc))
+                    localizationOnMap = newLoc;
             }
         }
     }
