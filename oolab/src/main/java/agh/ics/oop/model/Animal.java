@@ -2,7 +2,7 @@ package agh.ics.oop.model;
 
 import java.util.Objects;
 
-public class Animal {
+public class Animal implements WorldElement {
     private MapDirection facingDirection;
     private Vector2d localizationOnMap;
 
@@ -65,5 +65,10 @@ public class Animal {
     @Override
     public int hashCode() {
         return Objects.hash(facingDirection, localizationOnMap);
+    }
+
+    @Override
+    public Vector2d getPosition() {
+        return localizationOnMap;
     }
 }

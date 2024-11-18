@@ -3,11 +3,18 @@ package agh.ics.oop.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class RectangularMapTest {
+public class GrassFieldTest {
+    @Test
+    void grassFieldIsGeneratedWithProperAmountOfGrass() {
+        int grassCount = 10;
+        var testGrassField = new GrassField(grassCount);
+
+        Assertions.assertEquals(grassCount, testGrassField.getElements().size());
+    }
 
     @Test
     void animalIsPlacedOnValidCoordinates() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new GrassField(10);
         var properPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(properPosition);
 
@@ -17,20 +24,10 @@ public class RectangularMapTest {
         Assertions.assertEquals(testAnimal, testMap.objectAt(properPosition));
     }
 
-    @Test
-    void animalIsNotPlacedOutsideMap() {
-        var testMap = new RectangularMap(4, 5);
-        var properPosition = new Vector2d(10, 10);
-        var testAnimal = new Animal(properPosition);
-
-        var result = testMap.place(testAnimal);
-
-        Assertions.assertFalse(result);
-    }
 
     @Test
     void animalIsNotPlacedOnOtherAnimal() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new GrassField(10);
         var properPosition = new Vector2d(1, 1);
         var exampleAnimal = new Animal(properPosition);
         var testAnimal = new Animal(properPosition);
@@ -44,7 +41,7 @@ public class RectangularMapTest {
 
     @Test
     void animalMovesIfPositionValid() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new GrassField(10);
         var testPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(testPosition);
 
@@ -53,26 +50,26 @@ public class RectangularMapTest {
 
         var expectedPosition = new Vector2d(1, 2);
 
-        Assertions.assertFalse(testMap.isOccupied(testPosition));
         Assertions.assertEquals(testAnimal, testMap.objectAt(expectedPosition));
     }
 
     @Test
     void animalWontMoveIfPositionInvalid() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new GrassField(10);
         var testPosition = new Vector2d(0, 0);
+        var futurePosition = new Vector2d(0, -1);
         var testAnimal = new Animal(testPosition);
+        var blockingAnimal = new Animal(futurePosition);
 
         testMap.place(testAnimal);
+        testMap.place(blockingAnimal);
         testMap.move(testAnimal, MoveDirection.BACKWARD);
-
-        Assertions.assertTrue(testMap.isOccupied(testPosition));
         Assertions.assertEquals(testAnimal, testMap.objectAt(testPosition));
     }
 
     @Test
     void occupiedPlaceIsOccupied() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new GrassField(10);
         var testPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(testPosition);
 
@@ -82,16 +79,13 @@ public class RectangularMapTest {
     }
 
     @Test
-    void unoccupiedPlaceIsNotOccupied() {
-        var testMap = new RectangularMap(4, 5);
-        var occupiedPosition = new Vector2d(1, 1);
-        var unoccupiedPosition = new Vector2d(2, 2);
-        var testAnimal = new Animal(occupiedPosition);
+    void unoccupiedPlaceIsUnoccupied() {
+        var testMap = new GrassField(10);
+        var testPosition = new Vector2d(1000, 1000);
 
-        testMap.place(testAnimal);
-
-        Assertions.assertFalse(testMap.isOccupied(unoccupiedPosition));
+        Assertions.assertFalse(testMap.isOccupied(testPosition));
     }
+
 
     @Test
     void objectThatIsOnPositionIsReturned() {
@@ -106,7 +100,7 @@ public class RectangularMapTest {
 
     @Test
     void canMoveToValidPosition() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new GrassField(10);
         var testPosition = new Vector2d(1, 1);
 
 
@@ -114,17 +108,8 @@ public class RectangularMapTest {
     }
 
     @Test
-    void cantMoveToPositionOutsideMap() {
-        var testMap = new RectangularMap(4, 5);
-        var testPosition = new Vector2d(10, 10);
-
-
-        Assertions.assertFalse(testMap.canMoveTo(testPosition));
-    }
-
-    @Test
     void cantMoveToOccupiedPosition() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new GrassField(10);
         var occupiedPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(occupiedPosition);
 
@@ -133,14 +118,47 @@ public class RectangularMapTest {
         Assertions.assertFalse(testMap.canMoveTo(occupiedPosition));
     }
 
+//    @Test
+//    void upperMapVisualisationBoundaryIsProperlySet() {
+//        var testMap = new GrassField(10);
+//        var topRightPosition = new Vector2d(100, 100);
+//        var testAnimal = new Animal(topRightPosition);
+//
+//        testMap.place(testAnimal);
+//
+//        Assertions.assertEquals(topRightPosition, testMap.getUpperVisualisationBoundary());
+//
+//        testMap.move(testAnimal, MoveDirection.FORWARD);
+//
+//        topRightPosition = new Vector2d(100, 101);
+//
+//        Assertions.assertEquals(topRightPosition, testMap.getUpperVisualisationBoundary());
+//    }
+//
+//    @Test
+//    void lowerMapVisualisationBoundaryIsProperlySet() {
+//        var testMap = new GrassField(10);
+//        var lowerLeftPosition = new Vector2d(-100, -100);
+//        var testAnimal = new Animal(lowerLeftPosition);
+//
+//        testMap.place(testAnimal);
+//
+//        Assertions.assertEquals(lowerLeftPosition, testMap.getLowerVisualisationBoundary());
+//
+//        testMap.move(testAnimal, MoveDirection.BACKWARD);
+//
+//        lowerLeftPosition = new Vector2d(-100, -101);
+//
+//        Assertions.assertEquals(lowerLeftPosition, testMap.getLowerVisualisationBoundary());
+//    }
+
     @Test
-    void rectangularMapReturnsProperAmountOfElements() {
-        RectangularMap testMap = new RectangularMap(10, 10);
+    void grassFieldReturnsProperAmountOfElements() {
+        GrassField defaultMap = new GrassField(10);
         Animal animal1 = new Animal(new Vector2d(0, 0));
         Animal animal2 = new Animal(new Vector2d(1, 1));
-        testMap.place(animal1);
-        testMap.place(animal2);
-        Assertions.assertEquals(2, testMap.getElements().size());
+        defaultMap.place(animal1);
+        defaultMap.place(animal2);
+        Assertions.assertEquals(12, defaultMap.getElements().size());
     }
-
 }
