@@ -5,4 +5,5 @@ package agh.ics.oop.model;
 //as it's not mentioned in spec i won't implement it, because I don't want to implement features based on deducted spec and end up with broken program later on when my
 //assumption turns out to be false
 public interface WorldElement {
+    public Vector2d getPosition();
 }

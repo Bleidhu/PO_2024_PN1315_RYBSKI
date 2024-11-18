@@ -25,6 +25,9 @@ public class World {
             System.out.println(grassField);
         }
         System.out.println(grassField);
+        grassField = new GrassField(0);
+
+        System.out.println(grassField);
     }
 
     public static void run(MoveDirection[] args) {

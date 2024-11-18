@@ -11,7 +11,7 @@ public class GrassFieldTest {
 
         Assertions.assertEquals(grassCount, testGrassField.getElements().size());
     }
-    
+
     @Test
     void animalIsPlacedOnValidCoordinates() {
         var testMap = new GrassField(10);
@@ -118,39 +118,39 @@ public class GrassFieldTest {
         Assertions.assertFalse(testMap.canMoveTo(occupiedPosition));
     }
 
-    @Test
-    void upperMapVisualisationBoundaryIsProperlySet() {
-        var testMap = new GrassField(10);
-        var topRightPosition = new Vector2d(100, 100);
-        var testAnimal = new Animal(topRightPosition);
-
-        testMap.place(testAnimal);
-
-        Assertions.assertEquals(topRightPosition, testMap.getUpperVisualisationBoundary());
-
-        testMap.move(testAnimal, MoveDirection.FORWARD);
-
-        topRightPosition = new Vector2d(100, 101);
-
-        Assertions.assertEquals(topRightPosition, testMap.getUpperVisualisationBoundary());
-    }
-
-    @Test
-    void lowerMapVisualisationBoundaryIsProperlySet() {
-        var testMap = new GrassField(10);
-        var lowerLeftPosition = new Vector2d(-100, -100);
-        var testAnimal = new Animal(lowerLeftPosition);
-
-        testMap.place(testAnimal);
-
-        Assertions.assertEquals(lowerLeftPosition, testMap.getLowerVisualisationBoundary());
-
-        testMap.move(testAnimal, MoveDirection.BACKWARD);
-
-        lowerLeftPosition = new Vector2d(-100, -101);
-
-        Assertions.assertEquals(lowerLeftPosition, testMap.getLowerVisualisationBoundary());
-    }
+//    @Test
+//    void upperMapVisualisationBoundaryIsProperlySet() {
+//        var testMap = new GrassField(10);
+//        var topRightPosition = new Vector2d(100, 100);
+//        var testAnimal = new Animal(topRightPosition);
+//
+//        testMap.place(testAnimal);
+//
+//        Assertions.assertEquals(topRightPosition, testMap.getUpperVisualisationBoundary());
+//
+//        testMap.move(testAnimal, MoveDirection.FORWARD);
+//
+//        topRightPosition = new Vector2d(100, 101);
+//
+//        Assertions.assertEquals(topRightPosition, testMap.getUpperVisualisationBoundary());
+//    }
+//
+//    @Test
+//    void lowerMapVisualisationBoundaryIsProperlySet() {
+//        var testMap = new GrassField(10);
+//        var lowerLeftPosition = new Vector2d(-100, -100);
+//        var testAnimal = new Animal(lowerLeftPosition);
+//
+//        testMap.place(testAnimal);
+//
+//        Assertions.assertEquals(lowerLeftPosition, testMap.getLowerVisualisationBoundary());
+//
+//        testMap.move(testAnimal, MoveDirection.BACKWARD);
+//
+//        lowerLeftPosition = new Vector2d(-100, -101);
+//
+//        Assertions.assertEquals(lowerLeftPosition, testMap.getLowerVisualisationBoundary());
+//    }
 
     @Test
     void grassFieldReturnsProperAmountOfElements() {

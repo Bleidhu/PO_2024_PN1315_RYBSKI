@@ -8,8 +8,8 @@ import java.util.List;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final MapVisualizer visualizer;
-    protected Vector2d upperBoundary = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
-    protected Vector2d lowerBoundary = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
+    protected Vector2d upperBoundary;
+    protected Vector2d lowerBoundary;
     protected HashMap<Vector2d, Animal> animals;
 
     public AbstractWorldMap() {
@@ -46,16 +46,15 @@ public abstract class AbstractWorldMap implements WorldMap {
         return animals.get(position);
     }
 
-    //I don't know if we can assume that, grass is occupying position, if so the can move to can be simplified, but for now I am leaving it as is
-    //Update - we NEED to assume so, because otherwise map visualiser breaks
     @Override
     public boolean isOccupied(Vector2d position) {
         return objectAt(position) != null;
     }
 
     @Override
+    //move to be abstract
     public boolean canMoveTo(Vector2d position) {
-        return (animals.get(position) == null) && (position.follows(lowerBoundary) && position.precedes(upperBoundary));
+        return (animals.get(position) == null);
     }
 
 
@@ -63,11 +62,7 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public List<WorldElement> getElements() {
-        List<WorldElement> objectsToReturn = new ArrayList<>();
-
-        for (var key : animals.entrySet()) {
-            objectsToReturn.add(animals.get(key));
-        }
-        return objectsToReturn;
+        List<WorldElement> elements = new ArrayList<>(animals.values());
+        return elements;
     }
 }

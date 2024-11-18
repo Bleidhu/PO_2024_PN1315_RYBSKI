@@ -3,13 +3,14 @@ package agh.ics.oop.model.util;
 import agh.ics.oop.model.Vector2d;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class RandomPositionGenerator implements Iterable<Vector2d> {
 
     private final List<Vector2d> leftPositions;
+    private final Random rng = new Random();
     private int grassLeftToBeReturned;
 
     //This generation method is based on generating all possible coordinates inside field. The values are stored inside leftPositions list and when certain value is needed
@@ -47,12 +48,12 @@ public class RandomPositionGenerator implements Iterable<Vector2d> {
         @Override
         public Vector2d next() {
             var positionsLeft = leftPositions.size();
-            var nextPositionIndex = (int) (Math.random() * positionsLeft);
-            Collections.swap(leftPositions, nextPositionIndex, positionsLeft - 1);
-            var nexctPosition = leftPositions.get(positionsLeft - 1);
+            var nextPositionIndex = rng.nextInt(positionsLeft);
+            var nextPosition = leftPositions.get(nextPositionIndex);
+            leftPositions.set(nextPositionIndex, leftPositions.get(positionsLeft - 1));
             leftPositions.removeLast();
             grassLeftToBeReturned -= 1;
-            return nexctPosition;
+            return nextPosition;
         }
     }
 }

@@ -66,4 +66,9 @@ public class Animal implements WorldElement {
     public int hashCode() {
         return Objects.hash(facingDirection, localizationOnMap);
     }
+
+    @Override
+    public Vector2d getPosition() {
+        return localizationOnMap;
+    }
 }
