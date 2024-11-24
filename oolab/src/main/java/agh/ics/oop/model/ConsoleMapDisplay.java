@@ -10,9 +10,7 @@ public class ConsoleMapDisplay implements MapChangeListener {
 
     @Override
     public void mapChanged(WorldMap worldMap, String message) {
-        System.out.println(message);
-        System.out.println(worldMap);
-        System.out.println(updatesRecieved);
+        System.out.println(String.format("%s \n %s \n %s ", message, worldMap, updatesRecieved));
         updatesRecieved += 1;
     }
 }

@@ -219,7 +219,7 @@ public class SimulationTest {
         Assertions.assertEquals(MapDirection.WEST, simulation.getAnimalFacingDirection(1));
     }
 
-    //This test becomes unusable with new specification, will be removed after pr
+    //This test becomes hard to use with new specification, will be removed after pr
 //    @Test
 //    void inputStringWithInwalidMovesIsProperlySimulated() {
 //        String[] testArgs = {"f", "x", "example", "f", "rubbish", "l", "lbr", "l", "b", "b"};
