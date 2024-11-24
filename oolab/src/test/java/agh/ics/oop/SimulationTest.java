@@ -219,20 +219,21 @@ public class SimulationTest {
         Assertions.assertEquals(MapDirection.WEST, simulation.getAnimalFacingDirection(1));
     }
 
-    @Test
-    void inputStringWithInwalidMovesIsProperlySimulated() {
-        String[] testArgs = {"f", "x", "example", "f", "rubbish", "l", "lbr", "l", "b", "b"};
-        List<MoveDirection> directions = OptionsParser.parseOptions(testArgs);
-        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 3));
-        WorldMap map = new RectangularMap(5, 5);
-        Simulation simulation = new Simulation(positions, directions, map);
-        simulation.run();
-
-
-        Assertions.assertEquals(new Vector2d(3, 3), simulation.getAnimalLocalisation(0));
-        Assertions.assertEquals(new Vector2d(4, 4), simulation.getAnimalLocalisation(1));
-        Assertions.assertEquals(MapDirection.WEST, simulation.getAnimalFacingDirection(0));
-        Assertions.assertEquals(MapDirection.WEST, simulation.getAnimalFacingDirection(1));
-    }
+    //This test becomes unusable with new specification, will be removed after pr
+//    @Test
+//    void inputStringWithInwalidMovesIsProperlySimulated() {
+//        String[] testArgs = {"f", "x", "example", "f", "rubbish", "l", "lbr", "l", "b", "b"};
+//        List<MoveDirection> directions = OptionsParser.parseOptions(testArgs);
+//        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 3));
+//        WorldMap map = new RectangularMap(5, 5);
+//        Simulation simulation = new Simulation(positions, directions, map);
+//        simulation.run();
+//
+//
+//        Assertions.assertEquals(new Vector2d(3, 3), simulation.getAnimalLocalisation(0));
+//        Assertions.assertEquals(new Vector2d(4, 4), simulation.getAnimalLocalisation(1));
+//        Assertions.assertEquals(MapDirection.WEST, simulation.getAnimalFacingDirection(0));
+//        Assertions.assertEquals(MapDirection.WEST, simulation.getAnimalFacingDirection(1));
+//    }
 
 }

@@ -11,10 +11,13 @@ public class RectangularMapTest {
         var properPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(properPosition);
 
-        var result = testMap.place(testAnimal);
+        try {
+            testMap.place(testAnimal);
+            Assertions.assertEquals(testAnimal, testMap.objectAt(properPosition));
+        } catch (IncorrectPositionException e) {
+            Assertions.fail("Exception was thrown" + e.getMessage());
+        }
 
-        Assertions.assertTrue(result);
-        Assertions.assertEquals(testAnimal, testMap.objectAt(properPosition));
     }
 
     @Test
@@ -23,9 +26,10 @@ public class RectangularMapTest {
         var properPosition = new Vector2d(10, 10);
         var testAnimal = new Animal(properPosition);
 
-        var result = testMap.place(testAnimal);
+        Assertions.assertThrows(IncorrectPositionException.class, () -> {
+            testMap.place(testAnimal);
+        });
 
-        Assertions.assertFalse(result);
     }
 
     @Test
@@ -35,11 +39,14 @@ public class RectangularMapTest {
         var exampleAnimal = new Animal(properPosition);
         var testAnimal = new Animal(properPosition);
 
-        testMap.place(exampleAnimal);
-        var result = testMap.place(testAnimal);
-
-        Assertions.assertFalse(result);
-        Assertions.assertEquals(exampleAnimal, testMap.objectAt(properPosition));
+        try {
+            testMap.place(exampleAnimal);
+            Assertions.assertThrows(IncorrectPositionException.class, () -> {
+                testMap.place(testAnimal);
+            });
+        } catch (Exception ex) {
+            Assertions.fail("Exception was thrown" + ex.getMessage());
+        }
     }
 
     @Test
@@ -48,7 +55,11 @@ public class RectangularMapTest {
         var testPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(testPosition);
 
-        testMap.place(testAnimal);
+        try {
+            testMap.place(testAnimal);
+        } catch (IncorrectPositionException e) {
+            Assertions.fail("Exception was thrown" + e.getMessage());
+        }
         testMap.move(testAnimal, MoveDirection.FORWARD);
 
         var expectedPosition = new Vector2d(1, 2);
@@ -63,7 +74,11 @@ public class RectangularMapTest {
         var testPosition = new Vector2d(0, 0);
         var testAnimal = new Animal(testPosition);
 
-        testMap.place(testAnimal);
+        try {
+            testMap.place(testAnimal);
+        } catch (IncorrectPositionException e) {
+            Assertions.fail("Exception was thrown" + e.getMessage());
+        }
         testMap.move(testAnimal, MoveDirection.BACKWARD);
 
         Assertions.assertTrue(testMap.isOccupied(testPosition));
@@ -76,7 +91,11 @@ public class RectangularMapTest {
         var testPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(testPosition);
 
-        testMap.place(testAnimal);
+        try {
+            testMap.place(testAnimal);
+        } catch (IncorrectPositionException e) {
+            Assertions.fail("Exception was thrown" + e.getMessage());
+        }
 
         Assertions.assertTrue(testMap.isOccupied(testPosition));
     }
@@ -88,7 +107,11 @@ public class RectangularMapTest {
         var unoccupiedPosition = new Vector2d(2, 2);
         var testAnimal = new Animal(occupiedPosition);
 
-        testMap.place(testAnimal);
+        try {
+            testMap.place(testAnimal);
+        } catch (IncorrectPositionException e) {
+            Assertions.fail("Exception was thrown" + e.getMessage());
+        }
 
         Assertions.assertFalse(testMap.isOccupied(unoccupiedPosition));
     }
@@ -99,7 +122,11 @@ public class RectangularMapTest {
         var occupiedPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(occupiedPosition);
 
-        testMap.place(testAnimal);
+        try {
+            testMap.place(testAnimal);
+        } catch (IncorrectPositionException e) {
+            Assertions.fail("Exception was thrown" + e.getMessage());
+        }
 
         Assertions.assertEquals(testAnimal, testMap.objectAt(occupiedPosition));
     }
@@ -128,7 +155,11 @@ public class RectangularMapTest {
         var occupiedPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(occupiedPosition);
 
-        testMap.place(testAnimal);
+        try {
+            testMap.place(testAnimal);
+        } catch (IncorrectPositionException e) {
+            Assertions.fail("Exception was thrown" + e.getMessage());
+        }
 
         Assertions.assertFalse(testMap.canMoveTo(occupiedPosition));
     }
@@ -138,9 +169,13 @@ public class RectangularMapTest {
         RectangularMap testMap = new RectangularMap(10, 10);
         Animal animal1 = new Animal(new Vector2d(0, 0));
         Animal animal2 = new Animal(new Vector2d(1, 1));
-        testMap.place(animal1);
-        testMap.place(animal2);
-        Assertions.assertEquals(2, testMap.getElements().size());
+        try {
+            testMap.place(animal1);
+            testMap.place(animal2);
+            Assertions.assertEquals(2, testMap.getElements().size());
+        } catch (IncorrectPositionException e) {
+            Assertions.fail("Exception was thrown" + e.getMessage());
+        }
     }
 
 }

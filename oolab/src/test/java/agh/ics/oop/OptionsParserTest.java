@@ -3,11 +3,11 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class OptionsParserTest {
     @Test
@@ -29,8 +29,9 @@ public class OptionsParserTest {
         assertEquals(expected, OptionsParser.parseOptions(testArguments));
 
         testArguments[0] = "x";
-        List<MoveDirection> expected_empty = new ArrayList<>();
-        assertEquals(expected_empty, OptionsParser.parseOptions(testArguments));
+        assertThrows(IllegalArgumentException.class, () -> {
+            OptionsParser.parseOptions(testArguments);
+        });
     }
 
     @Test
@@ -43,22 +44,25 @@ public class OptionsParserTest {
     @Test
     void translateMultipleInvalid() {
         String[] testArguments = {"x", "y", "z", "m"};
-        List<MoveDirection> expected = new ArrayList<>();
-        assertEquals(expected, OptionsParser.parseOptions(testArguments));
+        assertThrows(IllegalArgumentException.class, () -> {
+            OptionsParser.parseOptions(testArguments);
+        });
     }
 
     @Test
     void translateMultipleInvalidCombinationsOfValid() {
         String[] testArguments = {"frl", "bl", "lx", "lf", "fl", "rl", "lr"};
-        List<MoveDirection> expected = new ArrayList<>();
-        assertEquals(expected, OptionsParser.parseOptions(testArguments));
+        assertThrows(IllegalArgumentException.class, () -> {
+            OptionsParser.parseOptions(testArguments);
+        });
     }
 
     @Test
     void translateMultipleValidWithInvalidInside() {
         String[] testArguments = {"f", "r", "l", "b", "xyz", "assimov", "Yugo", "l", "b"};
-        List<MoveDirection> expected = Arrays.asList(MoveDirection.FORWARD, MoveDirection.RIGHT, MoveDirection.LEFT, MoveDirection.BACKWARD, MoveDirection.LEFT, MoveDirection.BACKWARD);
-        assertEquals(expected, OptionsParser.parseOptions(testArguments));
+        assertThrows(IllegalArgumentException.class, () -> {
+            OptionsParser.parseOptions(testArguments);
+        });
     }
 
 }

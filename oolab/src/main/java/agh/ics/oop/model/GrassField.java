@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.RandomPositionGenerator;
 
 import java.util.HashMap;
@@ -48,18 +49,7 @@ public class GrassField extends AbstractWorldMap {
         }
         return grasses.get(position);
     }
-
-
-    @Override
-    public String toString() {
-        var drawingLowerBoundary = lowerVisualisationBoundary;
-        var drawingUpperBoundary = upperVisualisationBoundary;
-        for (var animal : animals.values()) {
-            drawingLowerBoundary = drawingLowerBoundary.lowerLeft(animal.getPosition());
-            drawingUpperBoundary = drawingUpperBoundary.upperRight(animal.getPosition());
-        }
-        return visualizer.draw(lowerVisualisationBoundary, upperVisualisationBoundary);
-    }
+    
 
     @Override
     public List<WorldElement> getElements() {
@@ -68,6 +58,17 @@ public class GrassField extends AbstractWorldMap {
         temporaryAnimals.addAll(grasses.values());
 
         return temporaryAnimals;
+    }
+
+    @Override
+    public Boundary getCurrentBounds() {
+        var drawingLowerBoundary = lowerVisualisationBoundary;
+        var drawingUpperBoundary = upperVisualisationBoundary;
+        for (var animal : animals.values()) {
+            drawingLowerBoundary = drawingLowerBoundary.lowerLeft(animal.getPosition());
+            drawingUpperBoundary = drawingUpperBoundary.upperRight(animal.getPosition());
+        }
+        return new Boundary(drawingLowerBoundary, drawingUpperBoundary);
     }
 
     //Methods used for testing

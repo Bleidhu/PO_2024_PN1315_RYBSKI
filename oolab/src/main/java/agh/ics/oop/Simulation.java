@@ -13,8 +13,12 @@ public class Simulation {
     public Simulation(List<Vector2d> startingPositions, List<MoveDirection> moves, WorldMap map) {
         for (var position : startingPositions) {
             var animalToBeAdded = new Animal(position);
-            if (map.place(animalToBeAdded))
+            try {
+                map.place(animalToBeAdded);
                 animals.add(animalToBeAdded);
+            } catch (IncorrectPositionException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
         this.moves = moves;
         this.map = map;
@@ -38,7 +42,6 @@ public class Simulation {
         for (var move : moves) {
             var tmpAnimal = animals.get(currentAnimalIndex);
             map.move(tmpAnimal, move);
-            System.out.println(map);
             currentAnimalIndex += 1;
             currentAnimalIndex %= animals.size();
         }

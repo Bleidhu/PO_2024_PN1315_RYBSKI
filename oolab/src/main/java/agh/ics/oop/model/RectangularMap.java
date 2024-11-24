@@ -1,26 +1,25 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.Boundary;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class RectangularMap extends AbstractWorldMap {
-    private final Vector2d upperBoundary;
-    private final Vector2d lowerBoundary;
+    private final Boundary bounds;
     Map<Vector2d, Animal> animals = new HashMap<>();
 
     public RectangularMap(int width, int height) {
-        upperBoundary = new Vector2d(width - 1, height - 1);
-        lowerBoundary = new Vector2d(0, 0);
+        bounds = new Boundary(new Vector2d(0, 0), new Vector2d(width - 1, height - 1));
     }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return super.canMoveTo(position) && (position.follows(lowerBoundary) && position.precedes(upperBoundary));
+        return super.canMoveTo(position) && (position.follows(bounds.lowerLeft()) && position.precedes(bounds.upperRight()));
     }
 
-
     @Override
-    public String toString() {
-        return visualizer.draw(lowerBoundary, upperBoundary);
+    public Boundary getCurrentBounds() {
+        return bounds;
     }
 }
