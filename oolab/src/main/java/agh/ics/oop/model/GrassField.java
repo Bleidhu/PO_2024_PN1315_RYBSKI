@@ -11,8 +11,6 @@ public class GrassField extends AbstractWorldMap {
     private Vector2d lowerVisualisationBoundary;
 
     public GrassField(int grassCount) {
-        super.lowerBoundary = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        super.upperBoundary = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
         grasses = new HashMap<>();
         var upperBound = (int) Math.sqrt(grassCount * 10);
         lowerVisualisationBoundary = new Vector2d(upperBound, upperBound);
@@ -70,11 +68,6 @@ public class GrassField extends AbstractWorldMap {
         temporaryAnimals.addAll(grasses.values());
 
         return temporaryAnimals;
-    }
-
-    @Override
-    public boolean canMoveTo(Vector2d position) {
-        return super.canMoveTo(position) && (position.follows(lowerBoundary) && position.precedes(upperBoundary));
     }
 
     //Methods used for testing

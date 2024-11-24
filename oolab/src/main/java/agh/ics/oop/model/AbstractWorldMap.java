@@ -8,8 +8,6 @@ import java.util.List;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final MapVisualizer visualizer;
-    protected Vector2d upperBoundary;
-    protected Vector2d lowerBoundary;
     protected HashMap<Vector2d, Animal> animals;
 
     public AbstractWorldMap() {
