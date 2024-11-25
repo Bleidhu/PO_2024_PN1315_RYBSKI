@@ -1,9 +1,9 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.GrassField;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.util.ConsoleMapDisplay;
 
 import java.util.List;
 
@@ -16,18 +16,19 @@ public class World {
 //        Simulation simulation = new Simulation(positions, directions, map);
 //        simulation.run();
         //f b r l f f r r f f f f f f f f
-        Animal animal1 = new Animal(new Vector2d(1, 1));
-        List<MoveDirection> moves = OptionsParser.parseOptions("f b r l f f r r f f f f f f f f".split(" "));
-        var grassField = new GrassField(10);
-        grassField.place(animal1);
-        for (var move : moves) {
-            grassField.move(animal1, move);
-            System.out.println(grassField);
+        try {
+            List<MoveDirection> moves = OptionsParser.parseOptions("f b r l f f r r f f f f f f f f".split(" "));
+            List<Vector2d> positions = List.of(new Vector2d(1, 1));
+            var grassField = new GrassField(10);
+            var observer = new ConsoleMapDisplay();
+            grassField.addObserver(observer);
+            var simulation = new Simulation(positions, moves, grassField);
+            simulation.run();
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            return;
         }
-        System.out.println(grassField);
-        grassField = new GrassField(0);
 
-        System.out.println(grassField);
     }
 
     public static void run(MoveDirection[] args) {

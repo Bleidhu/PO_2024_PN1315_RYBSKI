@@ -32,7 +32,7 @@ public class OptionsParser {
         List<MoveDirection> moves = new ArrayList<>();
         for (String option : options) {
             if (!(option.equals("f") || option.equals("b") || option.equals("l") || option.equals("r"))) {
-                continue;
+                throw new IllegalArgumentException(option + " is not legal move specification");
             }
             moves.add(switch (option) {
                 case "f" -> MoveDirection.FORWARD;
