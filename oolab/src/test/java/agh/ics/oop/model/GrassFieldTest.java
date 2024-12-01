@@ -8,14 +8,14 @@ public class GrassFieldTest {
     @Test
     void grassFieldIsGeneratedWithProperAmountOfGrass() {
         int grassCount = 10;
-        var testGrassField = new GrassField(grassCount);
+        var testGrassField = new GrassField(grassCount, 0);
 
         Assertions.assertEquals(grassCount, testGrassField.getElements().size());
     }
 
     @Test
     void animalIsPlacedOnValidCoordinates() {
-        var testMap = new GrassField(10);
+        var testMap = new GrassField(10, 0);
         var properPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(properPosition);
 
@@ -31,7 +31,7 @@ public class GrassFieldTest {
 
     @Test
     void animalIsNotPlacedOnOtherAnimal() {
-        var testMap = new GrassField(10);
+        var testMap = new GrassField(10, 0);
         var properPosition = new Vector2d(1, 1);
         var exampleAnimal = new Animal(properPosition);
         var testAnimal = new Animal(properPosition);
@@ -48,7 +48,7 @@ public class GrassFieldTest {
 
     @Test
     void animalMovesIfPositionValid() {
-        var testMap = new GrassField(10);
+        var testMap = new GrassField(10, 0);
         var testPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(testPosition);
 
@@ -66,7 +66,7 @@ public class GrassFieldTest {
 
     @Test
     void animalWontMoveIfPositionInvalid() {
-        var testMap = new GrassField(10);
+        var testMap = new GrassField(10, 0);
         var testPosition = new Vector2d(0, 0);
         var futurePosition = new Vector2d(0, -1);
         var testAnimal = new Animal(testPosition);
@@ -84,7 +84,7 @@ public class GrassFieldTest {
 
     @Test
     void occupiedPlaceIsOccupied() {
-        var testMap = new GrassField(10);
+        var testMap = new GrassField(10, 0);
         var testPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(testPosition);
 
@@ -99,7 +99,7 @@ public class GrassFieldTest {
 
     @Test
     void unoccupiedPlaceIsUnoccupied() {
-        var testMap = new GrassField(10);
+        var testMap = new GrassField(10, 0);
         var testPosition = new Vector2d(1000, 1000);
 
         Assertions.assertFalse(testMap.isOccupied(testPosition));
@@ -108,7 +108,7 @@ public class GrassFieldTest {
 
     @Test
     void objectThatIsOnPositionIsReturned() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new RectangularMap(4, 5, 0);
         var occupiedPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(occupiedPosition);
 
@@ -123,7 +123,7 @@ public class GrassFieldTest {
 
     @Test
     void canMoveToValidPosition() {
-        var testMap = new GrassField(10);
+        var testMap = new GrassField(10, 0);
         var testPosition = new Vector2d(1, 1);
 
 
@@ -132,7 +132,7 @@ public class GrassFieldTest {
 
     @Test
     void cantMoveToOccupiedPosition() {
-        var testMap = new GrassField(10);
+        var testMap = new GrassField(10, 0);
         var occupiedPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(occupiedPosition);
 
@@ -145,43 +145,9 @@ public class GrassFieldTest {
         Assertions.assertFalse(testMap.canMoveTo(occupiedPosition));
     }
 
-//    @Test
-//    void upperMapVisualisationBoundaryIsProperlySet() {
-//        var testMap = new GrassField(10);
-//        var topRightPosition = new Vector2d(100, 100);
-//        var testAnimal = new Animal(topRightPosition);
-//
-//        testMap.place(testAnimal);
-//
-//        Assertions.assertEquals(topRightPosition, testMap.getUpperVisualisationBoundary());
-//
-//        testMap.move(testAnimal, MoveDirection.FORWARD);
-//
-//        topRightPosition = new Vector2d(100, 101);
-//
-//        Assertions.assertEquals(topRightPosition, testMap.getUpperVisualisationBoundary());
-//    }
-//
-//    @Test
-//    void lowerMapVisualisationBoundaryIsProperlySet() {
-//        var testMap = new GrassField(10);
-//        var lowerLeftPosition = new Vector2d(-100, -100);
-//        var testAnimal = new Animal(lowerLeftPosition);
-//
-//        testMap.place(testAnimal);
-//
-//        Assertions.assertEquals(lowerLeftPosition, testMap.getLowerVisualisationBoundary());
-//
-//        testMap.move(testAnimal, MoveDirection.BACKWARD);
-//
-//        lowerLeftPosition = new Vector2d(-100, -101);
-//
-//        Assertions.assertEquals(lowerLeftPosition, testMap.getLowerVisualisationBoundary());
-//    }
-
     @Test
     void grassFieldReturnsProperAmountOfElements() {
-        GrassField defaultMap = new GrassField(10);
+        GrassField defaultMap = new GrassField(10, 0);
         Animal animal1 = new Animal(new Vector2d(0, 0));
         Animal animal2 = new Animal(new Vector2d(1, 1));
         try {

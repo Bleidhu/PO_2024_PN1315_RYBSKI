@@ -14,12 +14,16 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     protected List<MapChangeListener> observers;
 
-    public AbstractWorldMap() {
+    protected int mapId;
+
+    public AbstractWorldMap(int mapId) {
 
         visualizer = new MapVisualizer(this);
         animals = new HashMap<>();
 
         observers = new ArrayList();
+
+        this.mapId = mapId;
 
     }
 
@@ -93,5 +97,10 @@ public abstract class AbstractWorldMap implements WorldMap {
     public String toString() {
         Boundary bounds = getCurrentBounds();
         return visualizer.draw(bounds.lowerLeft(), bounds.upperRight());
+    }
+
+    @Override
+    public int getId() {
+        return mapId;
     }
 }

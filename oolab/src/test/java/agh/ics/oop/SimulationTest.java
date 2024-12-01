@@ -12,7 +12,7 @@ public class SimulationTest {
     void animalsFacingNorthOnCreation() {
         List<MoveDirection> directions = new ArrayList<>();
         List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
-        WorldMap map = new RectangularMap(5, 5);
+        WorldMap map = new RectangularMap(5, 5, 0);
         Simulation simulation = new Simulation(positions, directions, map);
 
         var animalsAmount = simulation.getAnimalsAmount();
@@ -29,7 +29,7 @@ public class SimulationTest {
 
         directions.add(MoveDirection.LEFT);
 
-        WorldMap map = new RectangularMap(5, 5);
+        WorldMap map = new RectangularMap(5, 5, 0);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 
@@ -43,7 +43,7 @@ public class SimulationTest {
 
         directions.add(MoveDirection.RIGHT);
 
-        WorldMap map = new RectangularMap(5, 5);
+        WorldMap map = new RectangularMap(5, 5, 0);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 
@@ -56,7 +56,7 @@ public class SimulationTest {
         List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
 
 
-        WorldMap map = new RectangularMap(5, 5);
+        WorldMap map = new RectangularMap(5, 5, 0);
         Simulation simulation = new Simulation(positions, directions, map);
 
         for (int i = 0; i < 2; ++i) {
@@ -70,7 +70,7 @@ public class SimulationTest {
         List<Vector2d> positions = List.of(new Vector2d(2, 2));
         var finalPosition = new Vector2d(2, 3);
         directions.add(MoveDirection.FORWARD);
-        WorldMap map = new RectangularMap(5, 5);
+        WorldMap map = new RectangularMap(5, 5, 0);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 
@@ -83,7 +83,7 @@ public class SimulationTest {
         List<Vector2d> positions = List.of(new Vector2d(2, 2));
         var finalPosition = new Vector2d(2, 1);
         directions.add(MoveDirection.BACKWARD);
-        WorldMap map = new RectangularMap(5, 5);
+        WorldMap map = new RectangularMap(5, 5, 0);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 
@@ -97,7 +97,7 @@ public class SimulationTest {
         var finalPosition = new Vector2d(1, 2);
         directions.add(MoveDirection.LEFT);
         directions.add(MoveDirection.FORWARD);
-        WorldMap map = new RectangularMap(5, 5);
+        WorldMap map = new RectangularMap(5, 5, 0);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 
@@ -110,7 +110,7 @@ public class SimulationTest {
         List<MoveDirection> directions = new ArrayList<>();
         List<Vector2d> positions = List.of(new Vector2d(4, 4));
         directions.add(MoveDirection.FORWARD);
-        WorldMap map = new RectangularMap(5, 5);
+        WorldMap map = new RectangularMap(5, 5, 0);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 
@@ -120,21 +120,21 @@ public class SimulationTest {
         Assertions.assertEquals(finalPosition, simulation.getAnimalLocalisation(0));
 
         directions = List.of(MoveDirection.RIGHT, MoveDirection.FORWARD);
-        map = new RectangularMap(5, 5);
+        map = new RectangularMap(5, 5, 0);
         simulation = new Simulation(positions, directions, map);
         simulation.run();
 
         Assertions.assertEquals(finalPosition, simulation.getAnimalLocalisation(0));
 
         directions = List.of(MoveDirection.LEFT, MoveDirection.BACKWARD);
-        map = new RectangularMap(5, 5);
+        map = new RectangularMap(5, 5, 0);
         simulation = new Simulation(positions, directions, map);
         simulation.run();
 
         Assertions.assertEquals(finalPosition, simulation.getAnimalLocalisation(0));
 
         directions = List.of(MoveDirection.LEFT, MoveDirection.LEFT, MoveDirection.BACKWARD);
-        map = new RectangularMap(5, 5);
+        map = new RectangularMap(5, 5, 0);
         simulation = new Simulation(positions, directions, map);
         simulation.run();
 
@@ -144,28 +144,28 @@ public class SimulationTest {
         positions = List.of(new Vector2d(0, 0));
         finalPosition = new Vector2d(0, 0);
         directions = List.of(MoveDirection.BACKWARD);
-        map = new RectangularMap(5, 5);
+        map = new RectangularMap(5, 5, 0);
         simulation = new Simulation(positions, directions, map);
         simulation.run();
 
         Assertions.assertEquals(finalPosition, simulation.getAnimalLocalisation(0));
 
         directions = List.of(MoveDirection.RIGHT, MoveDirection.BACKWARD);
-        map = new RectangularMap(5, 5);
+        map = new RectangularMap(5, 5, 0);
         simulation = new Simulation(positions, directions, map);
         simulation.run();
 
         Assertions.assertEquals(finalPosition, simulation.getAnimalLocalisation(0));
 
         directions = List.of(MoveDirection.LEFT, MoveDirection.FORWARD);
-        map = new RectangularMap(5, 5);
+        map = new RectangularMap(5, 5, 0);
         simulation = new Simulation(positions, directions, map);
         simulation.run();
 
         Assertions.assertEquals(finalPosition, simulation.getAnimalLocalisation(0));
 
         directions = List.of(MoveDirection.LEFT, MoveDirection.LEFT, MoveDirection.FORWARD);
-        map = new RectangularMap(5, 5);
+        map = new RectangularMap(5, 5, 0);
         simulation = new Simulation(positions, directions, map);
         simulation.run();
 
@@ -176,7 +176,7 @@ public class SimulationTest {
     void simulationRunsWithWalidDirections() {
         List<MoveDirection> directions = List.of(MoveDirection.FORWARD, MoveDirection.FORWARD, MoveDirection.LEFT, MoveDirection.LEFT, MoveDirection.BACKWARD, MoveDirection.BACKWARD);
         List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 3));
-        WorldMap map = new RectangularMap(5, 5);
+        WorldMap map = new RectangularMap(5, 5, 0);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 
@@ -192,7 +192,7 @@ public class SimulationTest {
         List<MoveDirection> directions = List.of(MoveDirection.FORWARD, MoveDirection.FORWARD, MoveDirection.FORWARD, MoveDirection.FORWARD,
                 MoveDirection.RIGHT, MoveDirection.RIGHT, MoveDirection.FORWARD, MoveDirection.FORWARD, MoveDirection.FORWARD, MoveDirection.FORWARD);
         List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 3));
-        WorldMap map = new RectangularMap(5, 5);
+        WorldMap map = new RectangularMap(5, 5, 0);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 
@@ -208,7 +208,7 @@ public class SimulationTest {
         String[] testArgs = {"f", "f", "l", "l", "b", "b"};
         List<MoveDirection> directions = OptionsParser.parseOptions(testArgs);
         List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 3));
-        WorldMap map = new RectangularMap(5, 5);
+        WorldMap map = new RectangularMap(5, 5, 0);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 

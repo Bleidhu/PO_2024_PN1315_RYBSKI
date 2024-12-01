@@ -49,4 +49,6 @@ public interface WorldMap extends agh.ics.oop.model.MoveValidator {
     List<WorldElement> getElements();
 
     Boundary getCurrentBounds();
+
+    int getId();
 }

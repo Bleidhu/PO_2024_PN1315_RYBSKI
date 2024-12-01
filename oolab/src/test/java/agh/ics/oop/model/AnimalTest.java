@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class AnimalTest {
-    MoveValidator validator = new RectangularMap(4, 4);
+    MoveValidator validator = new RectangularMap(4, 4, 0);
 
     @Test
     void animalIsProperlyOrientedWhenCreated() {

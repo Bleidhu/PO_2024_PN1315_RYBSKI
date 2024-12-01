@@ -13,7 +13,11 @@ public class ConsoleMapDisplay implements MapChangeListener {
 
     @Override
     public void mapChanged(WorldMap worldMap, String message) {
-        System.out.println(String.format("%s \n %s \n %s ", message, worldMap, updatesRecieved));
-        updatesRecieved += 1;
+        synchronized (System.out) {
+            System.out.println(String.format("%s \n %s \n %s \n map id: %s", message, worldMap, updatesRecieved, worldMap.getId()));
+        }
+        synchronized (this) {
+            updatesRecieved += 1;
+        }
     }
 }
