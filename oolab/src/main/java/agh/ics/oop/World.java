@@ -2,6 +2,7 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.GrassField;
 import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.RectangularMap;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.util.ConsoleMapDisplay;
 
@@ -9,21 +10,24 @@ import java.util.List;
 
 public class World {
     public static void main(String[] args) {
-//        var animal = new Animal();
-//        List<MoveDirection> directions = OptionsParser.parseOptions(args);
-//        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
-//        WorldMap map = new RectangularMap(4, 5);
-//        Simulation simulation = new Simulation(positions, directions, map);
-//        simulation.run();
-        //f b r l f f r r f f f f f f f f
         try {
             List<MoveDirection> moves = OptionsParser.parseOptions("f b r l f f r r f f f f f f f f".split(" "));
             List<Vector2d> positions = List.of(new Vector2d(1, 1));
-            var grassField = new GrassField(10);
+            var grassField = new GrassField(10, 0);
+            var rectangularMap = new RectangularMap(10, 10, 1);
             var observer = new ConsoleMapDisplay();
             grassField.addObserver(observer);
+            rectangularMap.addObserver(observer);
             var simulation = new Simulation(positions, moves, grassField);
-            simulation.run();
+            var simulation2 = new Simulation(positions, moves, rectangularMap);
+            var simulationEngine = new SimulationEngine(List.of(simulation, simulation2));
+            simulationEngine.runAsync();
+            try {
+                simulationEngine.awaitSimulationEnd();
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+            System.out.println("System zakończył działanie");
         } catch (IllegalArgumentException ex) {
             System.out.println("Error: " + ex.getMessage());
             return;

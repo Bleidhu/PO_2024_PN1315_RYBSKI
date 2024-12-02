@@ -10,16 +10,18 @@ import java.util.List;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final MapVisualizer visualizer;
+    private final int mapId;
     protected HashMap<Vector2d, Animal> animals;
-
     protected List<MapChangeListener> observers;
 
-    public AbstractWorldMap() {
+    public AbstractWorldMap(int mapId) {
 
         visualizer = new MapVisualizer(this);
         animals = new HashMap<>();
 
         observers = new ArrayList();
+
+        this.mapId = mapId;
 
     }
 
@@ -93,5 +95,10 @@ public abstract class AbstractWorldMap implements WorldMap {
     public String toString() {
         Boundary bounds = getCurrentBounds();
         return visualizer.draw(bounds.lowerLeft(), bounds.upperRight());
+    }
+
+    @Override
+    public int getId() {
+        return mapId;
     }
 }

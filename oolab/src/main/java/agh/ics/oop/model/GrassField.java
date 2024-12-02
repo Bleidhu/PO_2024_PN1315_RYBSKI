@@ -11,7 +11,8 @@ public class GrassField extends AbstractWorldMap {
     private Vector2d upperVisualisationBoundary;
     private Vector2d lowerVisualisationBoundary;
 
-    public GrassField(int grassCount) {
+    public GrassField(int grassCount, int mapId) {
+        super(mapId);
         grasses = new HashMap<>();
         var upperBound = (int) Math.sqrt(grassCount * 10);
         lowerVisualisationBoundary = new Vector2d(upperBound, upperBound);
@@ -49,7 +50,7 @@ public class GrassField extends AbstractWorldMap {
         }
         return grasses.get(position);
     }
-    
+
 
     @Override
     public List<WorldElement> getElements() {

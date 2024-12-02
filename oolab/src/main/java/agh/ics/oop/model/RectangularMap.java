@@ -11,7 +11,8 @@ public class RectangularMap extends AbstractWorldMap {
     private final Boundary bounds;
     Map<Vector2d, Animal> animals = new HashMap<>();
 
-    public RectangularMap(int width, int height) {
+    public RectangularMap(int width, int height, int mapId) {
+        super(mapId);
         lowerLeft = new Vector2d(0, 0);
         upperRight = new Vector2d(width - 1, height - 1);
 

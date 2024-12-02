@@ -8,7 +8,7 @@ public class RectangularMapTest {
 
     @Test
     void animalIsPlacedOnValidCoordinates() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new RectangularMap(4, 5, 0);
         var properPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(properPosition);
 
@@ -23,7 +23,7 @@ public class RectangularMapTest {
 
     @Test
     void animalIsNotPlacedOutsideMap() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new RectangularMap(4, 5, 0);
         var properPosition = new Vector2d(10, 10);
         var testAnimal = new Animal(properPosition);
 
@@ -35,7 +35,7 @@ public class RectangularMapTest {
 
     @Test
     void animalIsNotPlacedOnOtherAnimal() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new RectangularMap(4, 5, 0);
         var properPosition = new Vector2d(1, 1);
         var exampleAnimal = new Animal(properPosition);
         var testAnimal = new Animal(properPosition);
@@ -52,7 +52,7 @@ public class RectangularMapTest {
 
     @Test
     void animalMovesIfPositionValid() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new RectangularMap(4, 5, 0);
         var testPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(testPosition);
 
@@ -71,7 +71,7 @@ public class RectangularMapTest {
 
     @Test
     void animalWontMoveIfPositionInvalid() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new RectangularMap(4, 5, 0);
         var testPosition = new Vector2d(0, 0);
         var testAnimal = new Animal(testPosition);
 
@@ -88,7 +88,7 @@ public class RectangularMapTest {
 
     @Test
     void occupiedPlaceIsOccupied() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new RectangularMap(4, 5, 0);
         var testPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(testPosition);
 
@@ -103,7 +103,7 @@ public class RectangularMapTest {
 
     @Test
     void unoccupiedPlaceIsNotOccupied() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new RectangularMap(4, 5, 0);
         var occupiedPosition = new Vector2d(1, 1);
         var unoccupiedPosition = new Vector2d(2, 2);
         var testAnimal = new Animal(occupiedPosition);
@@ -119,7 +119,7 @@ public class RectangularMapTest {
 
     @Test
     void objectThatIsOnPositionIsReturned() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new RectangularMap(4, 5, 0);
         var occupiedPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(occupiedPosition);
 
@@ -134,7 +134,7 @@ public class RectangularMapTest {
 
     @Test
     void canMoveToValidPosition() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new RectangularMap(4, 5, 0);
         var testPosition = new Vector2d(1, 1);
 
 
@@ -143,7 +143,7 @@ public class RectangularMapTest {
 
     @Test
     void cantMoveToPositionOutsideMap() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new RectangularMap(4, 5, 0);
         var testPosition = new Vector2d(10, 10);
 
 
@@ -152,7 +152,7 @@ public class RectangularMapTest {
 
     @Test
     void cantMoveToOccupiedPosition() {
-        var testMap = new RectangularMap(4, 5);
+        var testMap = new RectangularMap(4, 5, 0);
         var occupiedPosition = new Vector2d(1, 1);
         var testAnimal = new Animal(occupiedPosition);
 
@@ -167,7 +167,7 @@ public class RectangularMapTest {
 
     @Test
     void rectangularMapReturnsProperAmountOfElements() {
-        RectangularMap testMap = new RectangularMap(10, 10);
+        RectangularMap testMap = new RectangularMap(10, 10, 0);
         Animal animal1 = new Animal(new Vector2d(0, 0));
         Animal animal2 = new Animal(new Vector2d(1, 1));
         try {
