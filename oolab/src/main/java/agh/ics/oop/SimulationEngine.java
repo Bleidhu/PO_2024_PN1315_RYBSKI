@@ -32,22 +32,17 @@ public class SimulationEngine {
 
     public void runAsyncInThreadPool() {
         for (Simulation simulation : simulations) {
-            Thread thread = new Thread(simulation);
-            threadPool.submit(thread);
+            threadPool.submit(new Thread(simulation));
         }
     }
 
-    public void awaitSimulationEnd() {
-        try {
-            for (Thread thread : threads) {
-                thread.join();
-            }
-            threadPool.shutdown();
-            if (!threadPool.awaitTermination(10, TimeUnit.SECONDS)) {
-                threadPool.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
+    public void awaitSimulationEnd() throws InterruptedException {
+        for (Thread thread : threads) {
+            thread.join();
+        }
+        threadPool.shutdown();
+        if (!threadPool.awaitTermination(10, TimeUnit.SECONDS)) {
+            threadPool.shutdownNow();
         }
     }
 }

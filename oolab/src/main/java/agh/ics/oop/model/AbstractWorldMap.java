@@ -10,11 +10,9 @@ import java.util.List;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final MapVisualizer visualizer;
+    private final int mapId;
     protected HashMap<Vector2d, Animal> animals;
-
     protected List<MapChangeListener> observers;
-
-    protected int mapId;
 
     public AbstractWorldMap(int mapId) {
 

@@ -22,7 +22,11 @@ public class World {
             var simulation2 = new Simulation(positions, moves, rectangularMap);
             var simulationEngine = new SimulationEngine(List.of(simulation, simulation2));
             simulationEngine.runAsync();
-            simulationEngine.awaitSimulationEnd();
+            try {
+                simulationEngine.awaitSimulationEnd();
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
             System.out.println("System zakończył działanie");
         } catch (IllegalArgumentException ex) {
             System.out.println("Error: " + ex.getMessage());
