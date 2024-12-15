@@ -49,4 +49,8 @@ public class SimulationEngine {
             threadPool.shutdownNow();
         }
     }
+
+    public void stopThreadPool() {
+        threadPool.shutdown();
+    }
 }

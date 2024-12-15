@@ -40,11 +40,7 @@ public class MainWindowPresenter {
                 loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
                 BorderPane viewRoot = loader.load();
                 SimulationPresenter presenter = loader.getController();
-                //presenters.add(presenter);
 
-                Stage stage = new Stage();
-                configureStage(stage, viewRoot);
-                stage.show();
 
                 var grassField = new GrassField(2, ids);
                 ids += 1;
@@ -52,6 +48,12 @@ public class MainWindowPresenter {
                 Simulation simulation = new Simulation(positions, moves, grassField);
                 simulations.add(simulation);
                 simulationEngine.addToThreadPool(simulation);
+                Stage stage = new Stage();
+                configureStage(stage, viewRoot);
+                stage.setOnCloseRequest(windowEvent -> {
+                    simulationEngine.stopThreadPool();
+                });
+                stage.show();
             } catch (IllegalArgumentException e) {
                 infolabel.setText("This moves combination is invalid");
             }
