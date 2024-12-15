@@ -1,8 +1,6 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.model.AbstractWorldMap;
-import agh.ics.oop.model.MapChangeListener;
-import agh.ics.oop.model.WorldMap;
+import agh.ics.oop.model.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -95,12 +93,25 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private void addElementsToMap() {
-        for (var element : worldMap.getElements()) {
-            if (worldMap.isOccupied(element.getPosition())) {
-                var label = new Label(element.toString());
-                var pos = element.getPosition();
-                mapGrid.add(label, pos.getX() - minX + 1, maxY - pos.getY() + 1);
-                GridPane.setHalignment(label, HPos.CENTER);
+//        for (var element : worldMap.getElements()) {
+//            if (worldMap.isOccupied(element.getPosition())) {
+//                var label = new Label(element.toString());
+//                var pos = element.getPosition();
+//                mapGrid.add(label, pos.getX() - minX + 1, maxY - pos.getY() + 1);
+//                GridPane.setHalignment(label, HPos.CENTER);
+//            }
+//        }
+        for (int i = 0; i <= width; ++i) {
+            for (int j = 0; j <= height; ++j) {
+                Vector2d positionToCheck = new Vector2d(i + minX, j + minY);
+                if (worldMap.isOccupied(positionToCheck)) {
+                    WorldElement element = worldMap.objectAt(positionToCheck).get();
+                    var label = new Label(element.toString());
+                    System.out.println(label);
+                    //mapGrid.add(label, positionToCheck.getX() - minX + 1, maxY - positionToCheck.getY() + 1);
+                    mapGrid.add(new WorldElementBox(element), i + 1, height - j + 1);
+                    GridPane.setHalignment(label, HPos.CENTER);
+                }
             }
         }
     }

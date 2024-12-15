@@ -5,6 +5,7 @@ import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.RectangularMap;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.util.ConsoleMapDisplay;
+import agh.ics.oop.model.util.FileMapDisplay;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +22,8 @@ public class World {
             grassField.addObserver((worldMap, message) -> {
                 System.out.println(String.format("%s %s", LocalDateTime.now(), message));
             });
+            FileMapDisplay fileMapDisplay = new FileMapDisplay();
+            grassField.addObserver(fileMapDisplay);
             rectangularMap.addObserver(observer);
             var simulation = new Simulation(positions, moves, grassField);
             var simulation2 = new Simulation(positions, moves, rectangularMap);

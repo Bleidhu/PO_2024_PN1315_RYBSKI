@@ -31,7 +31,7 @@ public class MainWindowPresenter {
 
     public void onSimulationStartClicked(ActionEvent actionEvent) throws IOException {
 
-        if (moveslisttextfield.getText().strip().length() > 0) {
+        if (!moveslisttextfield.getText().strip().isEmpty()) {
             try {
                 List<MoveDirection> moves = OptionsParser.parseOptions(moveslisttextfield.getText().split(" "));
                 List<Vector2d> positions = List.of(new Vector2d(1, 1));

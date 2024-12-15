@@ -6,4 +6,6 @@ package agh.ics.oop.model;
 //assumption turns out to be false
 public interface WorldElement {
     public Vector2d getPosition();
+
+    public String getResourceString();
 }
