@@ -9,8 +9,8 @@ import java.util.concurrent.TimeUnit;
 public class SimulationEngine {
 
     private final List<Simulation> simulations;
+    private final ExecutorService threadPool = Executors.newFixedThreadPool(4);
     private List<Thread> threads = new ArrayList<>();
-    private ExecutorService threadPool = Executors.newFixedThreadPool(4);
 
     public SimulationEngine(List<Simulation> simulations) {
         this.simulations = simulations;
@@ -34,6 +34,10 @@ public class SimulationEngine {
         for (Simulation simulation : simulations) {
             threadPool.submit(new Thread(simulation));
         }
+    }
+
+    public void addToThreadPool(Simulation simulation) {
+        threadPool.submit(new Thread(simulation));
     }
 
     public void awaitSimulationEnd() throws InterruptedException {

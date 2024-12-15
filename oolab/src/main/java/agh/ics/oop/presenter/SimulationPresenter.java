@@ -1,44 +1,49 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.OptionsParser;
-import agh.ics.oop.Simulation;
-import agh.ics.oop.SimulationEngine;
-import agh.ics.oop.model.*;
+import agh.ics.oop.model.AbstractWorldMap;
+import agh.ics.oop.model.MapChangeListener;
+import agh.ics.oop.model.WorldMap;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SimulationPresenter implements MapChangeListener {
-    private WorldMap worldMap;
-    @FXML
-    private Label infoLabel;
-    @FXML
-    private TextField moveslisttextfield;
-    @FXML
-    private GridPane mapGrid;
+    private AbstractWorldMap worldMap;
     @FXML
     private Label infolabel;
+    @FXML
+    private GridPane mapGrid;
 
     private int minY;
     private int maxY;
     private int minX;
     private int maxX;
     private int width;
-    private int heigth;
-    private int cellHeigth;
+    private int height;
+    private int cellHeight;
     private int cellWidth;
 
 
-    public void setWorldMap(WorldMap map) {
-        this.worldMap = map;
+    public void setWorldMap(AbstractWorldMap map) {
+        if (worldMap != null) {
+            worldMap.removeObserver(this);
+        }
+
+        map.addObserver(this);
+        map.addObserver((worldMap, message) -> Platform.runLater(() -> {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            System.out.println(dtf.format(now) + " " + message);
+        }));
+
+        worldMap = map;
     }
 
     private void updateStoredConstraints() {
@@ -49,10 +54,10 @@ public class SimulationPresenter implements MapChangeListener {
         maxX = boundaries.upperRight().getX();
 
         width = maxX - minX;
-        heigth = maxY - minY;
+        height = maxY - minY;
 
-        cellWidth = Math.round(300 / (width + 1));
-        cellHeigth = Math.round(300 / (heigth + 1));
+        cellWidth = Math.round((float) 300 / (width + 2));
+        cellHeight = Math.round((float) 300 / (height + 2));
 
 
     }
@@ -68,7 +73,7 @@ public class SimulationPresenter implements MapChangeListener {
         mapGrid.add(label, 0, 0);
         GridPane.setHalignment(label, HPos.CENTER);
         mapGrid.getColumnConstraints().add(new ColumnConstraints(cellWidth));
-        mapGrid.getRowConstraints().add(new RowConstraints(cellHeigth));
+        mapGrid.getRowConstraints().add(new RowConstraints(cellHeight));
     }
 
     private void setLabelsOx() {
@@ -81,11 +86,11 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private void setLabelsOy() {
-        for (int i = 0; i < heigth + 1; ++i) {
+        for (int i = 0; i < height + 1; ++i) {
             var label = new Label(String.format("%d", (maxY - i)));
             mapGrid.add(label, 0, i + 1);
             GridPane.setHalignment(label, HPos.CENTER);
-            mapGrid.getRowConstraints().add(new RowConstraints(cellHeigth));
+            mapGrid.getRowConstraints().add(new RowConstraints(cellHeight));
         }
     }
 
@@ -107,7 +112,7 @@ public class SimulationPresenter implements MapChangeListener {
         setLabelsOx();
         setLabelsOy();
         addElementsToMap();
-        mapGrid.setPrefSize(600, 600);
+        mapGrid.setPrefSize(300, 300);
         infolabel.setText(input);
     }
 
@@ -119,19 +124,4 @@ public class SimulationPresenter implements MapChangeListener {
 
     }
 
-    public void onSimulationStartClicked(ActionEvent actionEvent) {
-        try {
-            List<MoveDirection> moves = OptionsParser.parseOptions(moveslisttextfield.getText().split(" "));
-            List<Vector2d> positions = List.of(new Vector2d(1, 1));
-            var grassField = new GrassField(2, 0);
-            this.setWorldMap(grassField);
-            grassField.addObserver(this);
-            var simulation = new Simulation(positions, moves, grassField);
-            var simulationEngine = new SimulationEngine(List.of(simulation));
-            simulationEngine.runAsync();
-        } catch (IllegalArgumentException e) {
-            infolabel.setText("This moves combination is invalid");
-        }
-
-    }
 }
