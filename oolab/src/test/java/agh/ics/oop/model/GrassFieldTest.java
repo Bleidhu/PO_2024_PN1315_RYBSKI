@@ -21,7 +21,7 @@ public class GrassFieldTest {
 
         try {
             testMap.place(testAnimal);
-            Assertions.assertEquals(testAnimal, testMap.objectAt(properPosition));
+            Assertions.assertEquals(testAnimal, testMap.objectAt(properPosition).get());
         } catch (IncorrectPositionException ex) {
             Assertions.fail("Exception was thrown");
         }
@@ -58,7 +58,7 @@ public class GrassFieldTest {
 
             var expectedPosition = new Vector2d(1, 2);
 
-            Assertions.assertEquals(testAnimal, testMap.objectAt(expectedPosition));
+            Assertions.assertEquals(testAnimal, testMap.objectAt(expectedPosition).get());
         } catch (IncorrectPositionException ex) {
             Assertions.fail("Exception was thrown" + ex.getMessage());
         }
@@ -76,7 +76,7 @@ public class GrassFieldTest {
             testMap.place(testAnimal);
             testMap.place(blockingAnimal);
             testMap.move(testAnimal, MoveDirection.BACKWARD);
-            Assertions.assertEquals(testAnimal, testMap.objectAt(testPosition));
+            Assertions.assertEquals(testAnimal, testMap.objectAt(testPosition).get());
         } catch (IncorrectPositionException e) {
             Assertions.fail("Exception was thrown" + e.getMessage());
         }
@@ -118,7 +118,7 @@ public class GrassFieldTest {
             Assertions.fail("Exception was thrown" + e.getMessage());
         }
 
-        Assertions.assertEquals(testAnimal, testMap.objectAt(occupiedPosition));
+        Assertions.assertEquals(testAnimal, testMap.objectAt(occupiedPosition).get());
     }
 
     @Test

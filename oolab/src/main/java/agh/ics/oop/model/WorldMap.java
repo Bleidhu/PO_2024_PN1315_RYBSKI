@@ -4,6 +4,7 @@ import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.IncorrectPositionException;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The interface responsible for interacting with the map of the world.
@@ -42,7 +43,7 @@ public interface WorldMap extends agh.ics.oop.model.MoveValidator {
      * @param position The position of the animal.
      * @return animal or null if the position is not occupied.
      */
-    WorldElement objectAt(Vector2d position);
+    Optional<WorldElement> objectAt(Vector2d position);
 
     boolean canMoveTo(Vector2d position);
 
@@ -51,4 +52,6 @@ public interface WorldMap extends agh.ics.oop.model.MoveValidator {
     Boundary getCurrentBounds();
 
     int getId();
+
+    List<Animal> getOrderedAnimals();
 }

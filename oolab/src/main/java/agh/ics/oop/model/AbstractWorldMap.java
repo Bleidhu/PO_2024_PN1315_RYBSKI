@@ -4,9 +4,7 @@ import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.IncorrectPositionException;
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final MapVisualizer visualizer;
@@ -69,13 +67,13 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        return animals.get(position);
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        return Optional.ofNullable(animals.get(position));
     }
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        return objectAt(position) != null;
+        return objectAt(position).isPresent();
     }
 
     @Override
@@ -104,5 +102,11 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public int getId() {
         return mapId;
+    }
+
+    @Override
+    public List<Animal> getOrderedAnimals() {
+        return animals.values().stream().sorted(Comparator.comparing((Animal animal) -> animal.getPosition().getX()
+        ).thenComparing((Animal animal) -> animal.getPosition().getY())).toList();
     }
 }

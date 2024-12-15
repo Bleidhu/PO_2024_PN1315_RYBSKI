@@ -6,6 +6,7 @@ import agh.ics.oop.model.RectangularMap;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.util.ConsoleMapDisplay;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class World {
@@ -17,6 +18,9 @@ public class World {
             var rectangularMap = new RectangularMap(10, 10, 1);
             var observer = new ConsoleMapDisplay();
             grassField.addObserver(observer);
+            grassField.addObserver((worldMap, message) -> {
+                System.out.println(String.format("%s %s", LocalDateTime.now(), message));
+            });
             rectangularMap.addObserver(observer);
             var simulation = new Simulation(positions, moves, grassField);
             var simulation2 = new Simulation(positions, moves, rectangularMap);

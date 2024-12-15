@@ -5,6 +5,8 @@ import agh.ics.oop.model.util.RandomPositionGenerator;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class GrassField extends AbstractWorldMap {
     private final HashMap<Vector2d, Grass> grasses;
@@ -17,20 +19,6 @@ public class GrassField extends AbstractWorldMap {
         var upperBound = (int) Math.sqrt(grassCount * 10);
         lowerVisualisationBoundary = new Vector2d(upperBound, upperBound);
         upperVisualisationBoundary = new Vector2d(0, 0);
-//obsolete code - will be removed after pr 5, kept as fallback in case Random position generator is broken
-//        for (var i = 0; i < grassCount; ++i) {
-//
-//            var possiblePosition = new Vector2d((int) (Math.random() * upperBound), (int) (Math.random() * upperBound));
-//
-//            while (grass.get(possiblePosition) != null) {
-//                possiblePosition = new Vector2d((int) (Math.random() * upperBound), (int) (Math.random() * upperBound));
-//            }
-//
-//            upperVisualisationBoundary = upperVisualisationBoundary.upperRight(possiblePosition);
-//            lowerVisualisationBoundary = lowerVisualisationBoundary.lowerLeft(possiblePosition);
-//
-//            grass.put(possiblePosition, new Grass(possiblePosition));
-//        }
         RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(upperBound, upperBound, grassCount);
         for (Vector2d grassPosition : randomPositionGenerator) {
             grasses.put(grassPosition, new Grass(grassPosition));
@@ -43,22 +31,18 @@ public class GrassField extends AbstractWorldMap {
 
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
+    public Optional<WorldElement> objectAt(Vector2d position) {
         var animalAt = super.objectAt(position);
-        if (animalAt != null) {
+        if (animalAt.isPresent()) {
             return animalAt;
         }
-        return grasses.get(position);
+        return Optional.ofNullable(grasses.get(position));
     }
 
 
     @Override
     public List<WorldElement> getElements() {
-        var temporaryAnimals = super.getElements();
-
-        temporaryAnimals.addAll(grasses.values());
-
-        return temporaryAnimals;
+        return Stream.concat(super.getElements().stream(), grasses.values().stream()).toList();
     }
 
     @Override
@@ -72,12 +56,5 @@ public class GrassField extends AbstractWorldMap {
         return new Boundary(drawingLowerBoundary, drawingUpperBoundary);
     }
 
-    //Methods used for testing
-    protected Vector2d getUpperVisualisationBoundary() {
-        return upperVisualisationBoundary;
-    }
 
-    protected Vector2d getLowerVisualisationBoundary() {
-        return lowerVisualisationBoundary;
-    }
 }

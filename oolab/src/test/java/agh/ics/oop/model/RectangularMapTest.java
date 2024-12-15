@@ -4,6 +4,8 @@ import agh.ics.oop.model.util.IncorrectPositionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class RectangularMapTest {
 
     @Test
@@ -14,7 +16,7 @@ public class RectangularMapTest {
 
         try {
             testMap.place(testAnimal);
-            Assertions.assertEquals(testAnimal, testMap.objectAt(properPosition));
+            Assertions.assertEquals(testAnimal, testMap.objectAt(properPosition).get());
         } catch (IncorrectPositionException e) {
             Assertions.fail("Exception was thrown" + e.getMessage());
         }
@@ -66,7 +68,7 @@ public class RectangularMapTest {
         var expectedPosition = new Vector2d(1, 2);
 
         Assertions.assertFalse(testMap.isOccupied(testPosition));
-        Assertions.assertEquals(testAnimal, testMap.objectAt(expectedPosition));
+        Assertions.assertEquals(testAnimal, testMap.objectAt(expectedPosition).get());
     }
 
     @Test
@@ -83,7 +85,7 @@ public class RectangularMapTest {
         testMap.move(testAnimal, MoveDirection.BACKWARD);
 
         Assertions.assertTrue(testMap.isOccupied(testPosition));
-        Assertions.assertEquals(testAnimal, testMap.objectAt(testPosition));
+        Assertions.assertEquals(testAnimal, testMap.objectAt(testPosition).get());
     }
 
     @Test
@@ -129,7 +131,7 @@ public class RectangularMapTest {
             Assertions.fail("Exception was thrown" + e.getMessage());
         }
 
-        Assertions.assertEquals(testAnimal, testMap.objectAt(occupiedPosition));
+        Assertions.assertEquals(testAnimal, testMap.objectAt(occupiedPosition).get());
     }
 
     @Test
@@ -179,4 +181,33 @@ public class RectangularMapTest {
         }
     }
 
+    @Test
+    void animalsAreSortedByX() {
+        RectangularMap testMap = new RectangularMap(10, 10, 0);
+        Animal animal1 = new Animal(new Vector2d(0, 1));
+        Animal animal2 = new Animal(new Vector2d(1, 1));
+        List<Animal> expectedAnimals = List.of(animal1, animal2);
+        try {
+            testMap.place(animal1);
+            testMap.place(animal2);
+            Assertions.assertEquals(expectedAnimals, testMap.getOrderedAnimals());
+        } catch (IncorrectPositionException e) {
+            Assertions.fail("Exception was thrown" + e.getMessage());
+        }
+    }
+
+    @Test
+    void animalsAreSortedByY() {
+        RectangularMap testMap = new RectangularMap(10, 10, 0);
+        Animal animal1 = new Animal(new Vector2d(1, 0));
+        Animal animal2 = new Animal(new Vector2d(1, 1));
+        List<Animal> expectedAnimals = List.of(animal1, animal2);
+        try {
+            testMap.place(animal1);
+            testMap.place(animal2);
+            Assertions.assertEquals(expectedAnimals, testMap.getOrderedAnimals());
+        } catch (IncorrectPositionException e) {
+            Assertions.fail("Exception was thrown" + e.getMessage());
+        }
+    }
 }

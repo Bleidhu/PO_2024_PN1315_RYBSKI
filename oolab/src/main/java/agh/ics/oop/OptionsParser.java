@@ -2,8 +2,8 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 public class OptionsParser {
@@ -29,19 +29,37 @@ public class OptionsParser {
 //            };
 //            current_index++;
 //        }
-        List<MoveDirection> moves = new ArrayList<>();
-        for (String option : options) {
+        Stream<String> optionsStream = Stream.of(options);
+
+        var result = optionsStream.map(option -> {
             if (!(option.equals("f") || option.equals("b") || option.equals("l") || option.equals("r"))) {
                 throw new IllegalArgumentException(option + " is not legal move specification");
             }
-            moves.add(switch (option) {
+            return switch (option) {
                 case "f" -> MoveDirection.FORWARD;
                 case "b" -> MoveDirection.BACKWARD;
                 case "l" -> MoveDirection.LEFT;
                 case "r" -> MoveDirection.RIGHT;
                 default -> null;
-            });
-        }
-        return moves;
+            }
+                    ;
+        }).toList();
+
+        return result;
+
+//        List<MoveDirection> moves = new ArrayList<>();
+//        for (String option : options) {
+//            if (!(option.equals("f") || option.equals("b") || option.equals("l") || option.equals("r"))) {
+//                throw new IllegalArgumentException(option + " is not legal move specification");
+//            }
+//            moves.add(switch (option) {
+//                case "f" -> MoveDirection.FORWARD;
+//                case "b" -> MoveDirection.BACKWARD;
+//                case "l" -> MoveDirection.LEFT;
+//                case "r" -> MoveDirection.RIGHT;
+//                default -> null;
+//            });
+//        }
+//        return moves;
     }
 }
