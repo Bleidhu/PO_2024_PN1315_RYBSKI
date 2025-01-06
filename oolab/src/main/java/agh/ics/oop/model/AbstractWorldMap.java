@@ -43,13 +43,17 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public void move(Animal animal, MoveDirection direction) {
         var oldPosition = animal.getLocalizationOnMap();
+        var oldOrientation = animal.getFacingDirection();
         animal.move(direction, this);
         var newPosition = animal.getLocalizationOnMap();
+        var newOrientation = animal.getFacingDirection();
 
         if (oldPosition != newPosition) {
             animals.remove(oldPosition);
             animals.put(newPosition, animal);
             notifyObservers(String.format("Animal moved from %s to %s", oldPosition, newPosition));
+        } else if (oldOrientation != newOrientation) {
+            notifyObservers(String.format("Animal changed direction from %s to %s", oldOrientation, newOrientation));
         }
     }
 

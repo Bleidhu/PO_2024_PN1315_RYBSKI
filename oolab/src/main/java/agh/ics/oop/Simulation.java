@@ -45,6 +45,12 @@ public class Simulation implements Runnable {
             map.move(tmpAnimal, move);
             currentAnimalIndex += 1;
             currentAnimalIndex %= animals.size();
+            try {
+                Thread.sleep(500);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
         }
 
     }
