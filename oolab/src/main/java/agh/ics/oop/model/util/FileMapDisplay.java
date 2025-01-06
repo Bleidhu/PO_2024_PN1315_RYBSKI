@@ -21,7 +21,7 @@ public class FileMapDisplay implements MapChangeListener {
 
             writer.println("-----------------");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(String.format("Failed to save state to file due to error: %s", e.getMessage()));
         }
     }
 }
