@@ -10,13 +10,13 @@ class Animal( var localizationOnMap: Vector2d = Vector2d(2, 2), val id:Int){
             MoveDirection.LEFT -> facingDirection = facingDirection.previous();
             MoveDirection.RIGHT -> facingDirection = facingDirection.next();
             MoveDirection.FORWARD -> {
-                var newLoc = localizationOnMap + facingDirection.vector2d;
+                var newLoc = localizationOnMap + facingDirection.toUnitVector();
                 if(validator.canMoveTo(newLoc)){
                     localizationOnMap = newLoc;
                 }
             }
             MoveDirection.BACKWARD ->  {
-                var newLoc = localizationOnMap - facingDirection.vector2d;
+                var newLoc = localizationOnMap - facingDirection.toUnitVector();
                 if(validator.canMoveTo(newLoc)){
                     localizationOnMap = newLoc;
                 }
