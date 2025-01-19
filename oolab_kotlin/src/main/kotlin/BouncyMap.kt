@@ -1,14 +1,14 @@
 package org.example
 
 class BouncyMap(val width: Int, val height: Int): WorldMap{
-    val lowerLeft: Vector2d = Vector2d(0, 0);
-    val upperRight: Vector2d = Vector2d(width-1, height-1);
+    private val lowerLeft: Vector2d = Vector2d(0, 0);
+    private val upperRight: Vector2d = Vector2d(width-1, height-1);
     val bounds: Boundary = Boundary(lowerLeft, upperRight);
-    var animals: HashMap<Vector2d, Animal> = HashMap();
+    private var animals: HashMap<Vector2d, Animal> = HashMap();
     override fun place(animal: Animal): Boolean {
         if(animals.containsValue(animal)){
             for (pos in animals.keys){
-                if (animals[pos] ==animal){
+                if (animals[pos] == animal){
                     animals.remove(pos)
                     break
                 }
