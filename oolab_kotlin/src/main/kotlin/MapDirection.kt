@@ -1,10 +1,10 @@
 package org.example
 
-enum class MapDirection(val vector2d: Vector2d) {
-    NORTH(Vector2d(0, 1)),
-    EAST(Vector2d(1, 0)),
-    SOUTH(Vector2d(0, -1)),
-    WEST(Vector2d(-1, 0)), ;
+enum class MapDirection() {
+    NORTH,
+    EAST,
+    SOUTH,
+    WEST, ;
 
     override fun toString(): String {
         return when(this) {
